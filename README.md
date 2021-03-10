@@ -45,7 +45,7 @@ When thinking about a name that could helpfully describe this flow, [funnel-web 
 
 ### PRIMARY BRANCH ==> next release candidate ###
 
-The *primary branch* is not guaranteed to be a shippable. It represents the latest amalgamation of features that have been developed, reviewed and tested for the *next release*. There is no guarantee that these features have gone through rigourous QA testing. Neither is it guaranteed they have been released to production.
+The *primary branch* is not guaranteed to be a shippable version of the product. It represents the latest amalgamation of features that have been developed, reviewed and tested for the *next release*. There is no guarantee that these features have gone through rigourous QA testing. Neither is it guaranteed they have been released to production.
 
     master
     0—0—0------0—0
