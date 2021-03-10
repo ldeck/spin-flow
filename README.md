@@ -13,6 +13,7 @@ There are *LOTS* of Git flows available, each with a variation on the theme and 
 * <https://georgestocker.com/2020/03/04/please-stop-recommending-git-flow/>
 * <https://brightinventions.pl/blog/how-do-we-use-git>
 * <https://dev.to/scottshipp/war-of-the-git-flows-3ec2>
+* <https://medium.com/@brunoluiz/still-using-gitflow-what-about-a-simpler-alternative-74aa9a46b9a3>
 * <https://docs.microsoft.com/en-us/azure/devops/learn/devops-at-microsoft/use-git-microsoft>
 * <https://www.nomachetejuggling.com/2017/04/09/a-different-branching-strategy/>
 
