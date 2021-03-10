@@ -234,6 +234,8 @@ Once a hotfix has been tested and accepted, it may now be incorporated into the 
 
 Contributions are more than welcome. If you have suggestions on how to simplify and solidify the process further that'd be fantastic.
 
+Thanks in particular to Adam Ruka (@skinny85) for articulating his oneflow so carefully.
+
 ## Thanks ##
 
 Many thanks to the many who have provided a detailed explanation and discussion on their chosen workflow or commentary on limitations they see in a suggested workflow.
