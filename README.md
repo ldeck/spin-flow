@@ -151,13 +151,23 @@ You'll notice that there is no real distinction at this point between a feature 
 
 #### RELEASE TAGGING ####
 
-Using a tag to identify a release candidates might be appropriate where documentation is external to the repository (shudder the thought, here's looking at you Confluence).
+Using a tag to identify a release candidates might be appropriate where release documentation is external to the repository (shudder the thought; here's looking at you Confluence).
+
+##### release spin-off (tag candidate) #####
 
     master
     0—0—0------0—0—————0
                  \
                   0
                   candidate/1.2.3
+
+    $ git tag candidate/1.2.3 <ref>
+
+##### release spin-out (stage) #####
+
+Perform validation.
+
+##### release spin-into (tag release) #####
 
 If the candidate passes validation, tag the release and remove the candidate tag. If the candidate fails validation, remove the tag which allows a new candidate to be identified.
 
@@ -167,6 +177,9 @@ If the candidate passes validation, tag the release and remove the candidate tag
                   0
                   release/1.2.3
 
+    $ git tag release/1.2.3 <ref>
+    $ git tag -d candidate/1.2.3 <ref>
+    $ git push --delete origin candidate/1.2.3
 
 
 ## Contributions ##
