@@ -26,6 +26,21 @@ Official guides:
 * <https://docs.microsoft.com/en-us/azure/devops/learn/devops-at-microsoft/use-git-microsoft>
 * <https://www.atlassian.com/blog/git/simple-git-workflow-is-simple>
 
+Semantic versioning (related topic):
+* <https://semver.org>
+* <https://viesure.io/automating-semantic-versioning-with-maven/>
+* <https://github.com/semantic-release/semantic-release>
+* <https://levelup.gitconnected.com/semantic-versioning-and-release-automation-on-gitlab-9ba16af0c21>
+* <https://medium.com/trendyol-tech/semantic-versioning-and-gitlab-6bcd1e07c0b0>
+
+Gitlab tagging / release issues and examples:
+* <https://gitlab.com/gitlab-org/gitlab-foss/-/issues/23894>
+* <https://gitlab.com/gitlab-org/gitlab/-/issues/16290>
+* <https://github.com/viesure/blog-gitflow-maven/blob/master/.gitlab-ci.yml>
+* <https://docs.gitlab.com/ee/ci/yaml/#rules>
+* <https://stackoverflow.com/questions/47651769/gitlab-ci-run-build-job-when-manual-or-when-master-only>
+* <https://docs.gitlab.com/ee/user/project/push_options.html#push-options-for-gitlab-cicd>
+
 Long story short, the conceptual problems I have with GitFlow are these, at the least:
 
 * Multiple long-lived branches: master and develop. i.e., one of them is redundant.
