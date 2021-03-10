@@ -16,6 +16,7 @@ There are *LOTS* of Git flows available, each with a variation on the theme and 
 * <https://medium.com/@brunoluiz/still-using-gitflow-what-about-a-simpler-alternative-74aa9a46b9a3>
 * <https://docs.microsoft.com/en-us/azure/devops/learn/devops-at-microsoft/use-git-microsoft>
 * <https://www.nomachetejuggling.com/2017/04/09/a-different-branching-strategy/>
+* <https://www.git-tower.com/learn/git/ebook/en/command-line/advanced-topics/git-flow/>
 * <https://datasift.github.io/gitflow/GitFlowForGitHub.html>
 * <https://blogs.tensult.com/2019/02/12/version-controlling-using-git-flow-tags/>
 
