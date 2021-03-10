@@ -28,16 +28,17 @@ In the end, my suggested git spin-flow takes concepts from all the discussions t
 
 When thinking about a name that could helpfully describe this flow, [funnel-web spiders](https://www.nationalgeographic.org/photo/burrow-spider/) came to mind. How do spiders manage their webs? They spin them up, out, in, and so forth. These directional prepositions might be useful to describe the concepts at play. See [here](https://linguapress.com/grammar/prepositions-adverbs.htm) for further explanation of prepositions and adverbs.
 
-![Funnel-Web Spider courtesy National Geograhic](https://www.nationalgeographic.org/photo/burrow-spider/#funnel-web-spider "Keep your distance")
+
+[![Funnel-Web Spider courtesy National Geograhic](https://media.nationalgeographic.org/assets/photos/000/309/30980.jpg "Keep your distance")](https://www.nationalgeographic.org/photo/burrow-spider/#funnel-web-spider)
 
 ## spin-flow highlights ##
 
-  * A single long-lived branch: master (not guaranteed to be shippable)
-  * A series of short-lived branches (feature, release, hotfix, ops, wip)
-  * Tagged production releases
-  * Rebase + Merge —no-ff (as per [oneflow’s option #3 for finishing features](https://www.endoflineblog.com/oneflow-a-git-branching-model-and-workflow#finishing-a-feature-branch))
-  * Hot fixes against a production release tag (cherry-picked preferably), or the current release branch
-  * Avoids squash commits
+* A single long-lived branch: master (not guaranteed to be shippable)
+* A series of short-lived branches (feature, release, hotfix, ops, wip)
+* Tagged production releases
+* Rebase + Merge —no-ff (as per [oneflow’s option #3 for finishing features](https://www.endoflineblog.com/oneflow-a-git-branching-model-and-workflow#finishing-a-feature-branch))
+* Hot fixes against a production release tag (cherry-picked preferably), or the current release branch
+* Avoids squash commits
 
 ## spin-flow concepts ##
 
