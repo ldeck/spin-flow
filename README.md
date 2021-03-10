@@ -21,8 +21,9 @@ Long story short, the conceptual problems I have with GitFlow are these, at the 
 * Multiple long-lived branches: master and develop. i.e., one of them is redundant.
 * Requires setup of the repository to work (seems like tight coupling).
 * Reliance on a branch rather than tags to track production deployed code.
+* And so on.
 
-In the end, my suggested git spin-flow takes concepts from all the discussions to arrive at something that seems to make sense, at least to me at this time.
+In the end, I am weaving together something that takes concepts from all the discussions to arrive at something that seems to make sense, at least to me at this time, and which aims at being simple. This is a work in progress.
 
 ## Why spin? ##
 
