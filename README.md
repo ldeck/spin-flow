@@ -35,8 +35,9 @@ When thinking about a name that could helpfully describe this flow, [funnel-web 
 ## spin-flow highlights ##
 
 * A single long-lived branch: master (not guaranteed to be shippable)
-* A series of short-lived branches (feature, release, hotfix, ops, wip)
-* Tagged production releases
+* A series of short-lived branches (feature, hotfix, ops, wip)
+* Choice: release short-lived branch OR tag next candidate
+* Tagged release candidates and production releases
 * Rebase + Merge —no-ff (as per [oneflow’s option #3 for finishing features](https://www.endoflineblog.com/oneflow-a-git-branching-model-and-workflow#finishing-a-feature-branch))
 * Hot fixes against a production release tag (cherry-picked preferably), or the current release branch
 * Avoids squash commits
@@ -100,6 +101,53 @@ Once a feature has been tested and accepted, it may now be incorporated into the
     $ git merge --no-ff feature/feature-a
     $ git push origin master
     $ git branch -d feature/feature-a
+
+### RELEASES ###
+
+Releases are typically either planned OR identified from a set of features that are deemed ready for pushing out.
+
+The end result is an identifiable tagged release. The means of arriving at said tag could be from a candidate tag or release branch.
+
+The choice to create a release branch or to use a release candidate tag seems to boil down to whether or not you intend to amend the release over time or not. Amending over time would assume additional commits are cherry-picked into the release candidate branch. These additions might include release notes, or late arrival features deemed important, or even hotfixes for bugs discovered in higher environments. The smaller the set of features and additions, the faster the release can be tested and pushed to production (i.e., fast feedback principles apply).
+
+#### RELEASE BRANCHING ####
+
+##### release spin-off (branch) #####
+
+We begin by creating a release branch from the either the primary branch OR the previous release. Microsoft's model of always cherry-picking features for inclusion into a release suits the latter of these.
+
+    master
+    0—0—0------0—0—————0---0
+                 \
+                  0—0
+                  release-1.2.3
+
+    $ git checkout -b release/1.2.3 <ref>
+
+##### release spin-out (push) #####
+
+This step may occur multiple times as the release is amended so that QA may sign off on each amendment. This likely involves deployment to a staging environment.
+
+##### release spin-into (tag)  #####
+
+Closing out a release involves tagging the tip of the release and preserving it by merging it into the *primary branch*. If you're always cherry-picking into the release branch, the merge should be a no-op.
+
+    master
+    0—0—0------0—0—————0
+                 \     /
+                  0—0—0
+                  release-1.2.3
+
+
+    $ git checkout release/1.2.3
+    $ git tag 1.2.3
+    $ git checkout master
+    $ git merge release/1.2.3
+    $ git push --tags origin master
+    $ git branch -d release/1.2.3
+    $ git push origin :release/1.2.3
+
+You'll notice that there is no real distinction at this point between a feature being spun into the primary branch or a release. The primary difference is quality assurance.
 
 ## Contributions ##
 
