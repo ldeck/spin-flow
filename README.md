@@ -181,6 +181,54 @@ If the candidate passes validation, tag the release and remove the candidate tag
     $ git tag -d candidate/1.2.3 <ref>
     $ git push --delete origin candidate/1.2.3
 
+#### HOTFIXES ####
+
+Hotfixes are like features but are aimed at rectifying another feature was included in another release or release candidate.
+
+#### hotfix spin-off (branch) ####
+
+Hotfix development typically begins by branching off a release in order to contribute a likely requested hotfix to the *next minor release*.
+
+    master
+    0—0—0------0—0
+         \
+          0—0—0—0
+          hotfix-a
+
+
+    $ git checkout -b hotfix/hotfix-a release/1.2.3
+
+#### hotfix spin-out (push) ####
+
+When the hotfix is ready to be published to the wider team it should be pushed out to the central repository. A merge/pull request should be raised to request that the hotfix be incorporated into the *next release*.
+
+    git push -u origin hotfix/hotfix-a
+
+CI/CD pipelines should include automated testing to ensure it's a hotfix ready to be reviewed.
+
+    git checkout hotfix/hotfix-a
+    # run automated tests
+    # might deploy the app to a sandbox environment for deeper testing
+
+#### hotfix spin-into (merge) ####
+
+Once a hotfix has been tested and accepted, it may now be incorporated into the *next minor release*.
+
+    master
+    0—0—0------0—0—————0
+        \             /
+         0—0—--------0
+         hotfix-a
+
+
+    $ git checkout hotfix/1.2.3
+    $ git tag 1.2.3
+    # re-run automated tests
+    $ git checkout master
+    $ git merge --no-ff hotfix/hotfix-a
+    $ git push --tags origin master
+    $ git branch -d hotfix/hotfix-a
+
 
 ## Contributions ##
 
