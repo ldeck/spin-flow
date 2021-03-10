@@ -149,6 +149,26 @@ Closing out a release involves tagging the tip of the release and preserving it 
 
 You'll notice that there is no real distinction at this point between a feature being spun into the primary branch or a release. The primary difference is quality assurance.
 
+#### RELEASE TAGGING ####
+
+Using a tag to identify a release candidates might be appropriate where documentation is external to the repository (shudder the thought, here's looking at you Confluence).
+
+    master
+    0—0—0------0—0—————0
+                 \
+                  0
+                  candidate/1.2.3
+
+If the candidate passes validation, tag the release and remove the candidate tag. If the candidate fails validation, remove the tag which allows a new candidate to be identified.
+
+    master
+    0—0—0------0—0—————0
+                 \
+                  0
+                  release/1.2.3
+
+
+
 ## Contributions ##
 
 Contributions are more than welcome. If you have suggestions on how to simplify and solidify the process further that'd be fantastic.
