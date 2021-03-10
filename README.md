@@ -14,12 +14,17 @@ There are *LOTS* of Git flows available, each with a variation on the theme and 
 * <https://brightinventions.pl/blog/how-do-we-use-git>
 * <https://dev.to/scottshipp/war-of-the-git-flows-3ec2>
 * <https://medium.com/@brunoluiz/still-using-gitflow-what-about-a-simpler-alternative-74aa9a46b9a3>
-* <https://docs.gitlab.com/ee/topics/gitlab_flow.html#github-flow-as-a-simpler-alternative>
-* <https://docs.microsoft.com/en-us/azure/devops/learn/devops-at-microsoft/use-git-microsoft>
 * <https://www.nomachetejuggling.com/2017/04/09/a-different-branching-strategy/>
-* <https://www.git-tower.com/learn/git/ebook/en/command-line/advanced-topics/git-flow/>
 * <https://datasift.github.io/gitflow/GitFlowForGitHub.html>
 * <https://blogs.tensult.com/2019/02/12/version-controlling-using-git-flow-tags/>
+* <https://www.martindroessler.de/blog/index.php?/archives/83-Establishing-a-semi-automated-gitflowversioning-process-with-a-maven-project.html>
+
+Official guides:
+* <https://www.git-tower.com/learn/git/ebook/en/command-line/advanced-topics/git-flow/>
+* https://guides.github.com/introduction/flow/
+* <https://docs.gitlab.com/ee/topics/gitlab_flow.html>
+* <https://docs.microsoft.com/en-us/azure/devops/learn/devops-at-microsoft/use-git-microsoft>
+* <https://www.atlassian.com/blog/git/simple-git-workflow-is-simple>
 
 Long story short, the conceptual problems I have with GitFlow are these, at the least:
 
