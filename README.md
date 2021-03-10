@@ -3,7 +3,7 @@ Thinking through a practical team approach to git *flow.
 
 ## Background ##
 
-Lots has been written about whether GitFlow, [proposed by Vincent Driessen](https://nvie.com/posts/a-successful-git-branching-model/), is beneficial or [considered harmful](https://www.endoflineblog.com/gitflow-considered-harmful). I won't repeat the discussion here.
+Lots has been written about whether [GitFlow](https://github.com/nvie/gitflow), [proposed by Vincent Driessen](https://nvie.com/posts/a-successful-git-branching-model/), is beneficial or [considered harmful](https://www.endoflineblog.com/gitflow-considered-harmful). I won't repeat the discussion here.
 
 There are *LOTS* of Git flows available, each with a variation on the theme and discussion points to cover. Here's a non-exhaustive list to digest.
 
@@ -16,6 +16,8 @@ There are *LOTS* of Git flows available, each with a variation on the theme and 
 * <https://medium.com/@brunoluiz/still-using-gitflow-what-about-a-simpler-alternative-74aa9a46b9a3>
 * <https://docs.microsoft.com/en-us/azure/devops/learn/devops-at-microsoft/use-git-microsoft>
 * <https://www.nomachetejuggling.com/2017/04/09/a-different-branching-strategy/>
+* <https://datasift.github.io/gitflow/GitFlowForGitHub.html>
+* <https://blogs.tensult.com/2019/02/12/version-controlling-using-git-flow-tags/>
 
 Long story short, the conceptual problems I have with GitFlow are these, at the least:
 
