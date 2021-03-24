@@ -5,7 +5,7 @@ Thinking out loud through a practical team approach to git *flow.
 
 Lots has been written about whether [GitFlow](https://github.com/nvie/gitflow), [proposed by Vincent Driessen](https://nvie.com/posts/a-successful-git-branching-model/), is beneficial or [considered harmful](https://www.endoflineblog.com/gitflow-considered-harmful). I don't aim to repeat the discussion here.
 
-There are *LOTS* of Git flows available, each with a variation on the theme and discussion points to cover. See [further reading](Further Reading) for more information.
+There are *LOTS* of Git flows available, each with a variation on the theme and discussion points to cover. See [further reading](#further-reading) for more information.
 
 Long story short, the conceptual problems I have with GitFlow are these, at the least:
 
@@ -357,6 +357,7 @@ Once a hotfix has been tested and accepted, it may now be incorporated into the 
     $ git push origin :hotfix/foobar
 
 
+<a id="further-reading"></a>
 ## Further Reading ##
 
 Here's a non-exhaustive list to digest for your own investigation.
