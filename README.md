@@ -118,8 +118,8 @@ Maven, for example, typically has Major.Minor.Patch-SNAPSHOT to indicate the nex
 
 #### Further Reading ####
 
-- https://semver.org
-- https://www.cloudbees.com/blog/apache-maven-continuous-deliverydeployment-devoptics-teams-approach
+- [https://semver.org](https://semver.org)
+- [https://www.cloudbees.com/blog/apache-maven-continuous-deliverydeployment-devoptics-teams-approach](https://www.cloudbees.com/blog/apache-maven-continuous-deliverydeployment-devoptics-teams-approach)
 
 
 ### Handling Rollbacks and Roll-forward Operations ###
