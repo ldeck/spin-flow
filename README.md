@@ -5,42 +5,7 @@ Thinking out loud through a practical team approach to git *flow.
 
 Lots has been written about whether [GitFlow](https://github.com/nvie/gitflow), [proposed by Vincent Driessen](https://nvie.com/posts/a-successful-git-branching-model/), is beneficial or [considered harmful](https://www.endoflineblog.com/gitflow-considered-harmful). I don't aim to repeat the discussion here.
 
-There are *LOTS* of Git flows available, each with a variation on the theme and discussion points to cover. Here's a non-exhaustive list to digest for your own investigation.
-
-* <https://softwareengineering.stackexchange.com/questions/347525/should-a-release-branch-or-the-master-branch-be-tagged-when-the-gitflow-is-used>
-* <https://stackoverflow.com/questions/47739701/gitflow-merge-to-master-first-or-after-prod-release>
-* <https://blogs.tensult.com/2019/02/12/version-controlling-using-git-flow-tags/>
-* <https://georgestocker.com/2020/03/04/please-stop-recommending-git-flow/>
-* <https://brightinventions.pl/blog/how-do-we-use-git>
-* <https://dev.to/scottshipp/war-of-the-git-flows-3ec2>
-* <https://medium.com/@brunoluiz/still-using-gitflow-what-about-a-simpler-alternative-74aa9a46b9a3>
-* <https://www.nomachetejuggling.com/2017/04/09/a-different-branching-strategy/>
-* <https://datasift.github.io/gitflow/GitFlowForGitHub.html>
-* <https://blogs.tensult.com/2019/02/12/version-controlling-using-git-flow-tags/>
-* <https://www.martindroessler.de/blog/index.php?/archives/83-Establishing-a-semi-automated-gitflowversioning-process-with-a-maven-project.html>
-
-Official guides:
-* <https://www.git-tower.com/learn/git/ebook/en/command-line/advanced-topics/git-flow/>
-* https://guides.github.com/introduction/flow/
-* <https://docs.gitlab.com/ee/topics/gitlab_flow.html>
-* <https://docs.microsoft.com/en-us/azure/devops/learn/devops-at-microsoft/use-git-microsoft>
-* <https://www.atlassian.com/blog/git/simple-git-workflow-is-simple>
-
-Semantic versioning (related topic) and continous delivery/deployment:
-* <https://semver.org>
-* <https://www.cloudbees.com/blog/apache-maven-continuous-deliverydeployment-devoptics-teams-approach>
-* <https://viesure.io/automating-semantic-versioning-with-maven/>
-* <https://github.com/semantic-release/semantic-release>
-* <https://levelup.gitconnected.com/semantic-versioning-and-release-automation-on-gitlab-9ba16af0c21>
-* <https://medium.com/trendyol-tech/semantic-versioning-and-gitlab-6bcd1e07c0b0>
-
-Gitlab tagging / release issues and examples:
-* <https://gitlab.com/gitlab-org/gitlab-foss/-/issues/23894>
-* <https://gitlab.com/gitlab-org/gitlab/-/issues/16290>
-* <https://github.com/viesure/blog-gitflow-maven/blob/master/.gitlab-ci.yml>
-* <https://docs.gitlab.com/ee/ci/yaml/#rules>
-* <https://stackoverflow.com/questions/47651769/gitlab-ci-run-build-job-when-manual-or-when-master-only>
-* <https://docs.gitlab.com/ee/user/project/push_options.html#push-options-for-gitlab-cicd>
+There are *LOTS* of Git flows available, each with a variation on the theme and discussion points to cover. See [further reading](Further Reading) for more information.
 
 Long story short, the conceptual problems I have with GitFlow are these, at the least:
 
@@ -390,6 +355,46 @@ Once a hotfix has been tested and accepted, it may now be incorporated into the 
     $ git push origin candidate/1.2.0-SNAPSHOT
     $ git branch -d hotfix/foobar
     $ git push origin :hotfix/foobar
+
+
+## Further Reading ##
+
+Here's a non-exhaustive list to digest for your own investigation.
+
+* <https://softwareengineering.stackexchange.com/questions/347525/should-a-release-branch-or-the-master-branch-be-tagged-when-the-gitflow-is-used>
+* <https://stackoverflow.com/questions/47739701/gitflow-merge-to-master-first-or-after-prod-release>
+* <https://blogs.tensult.com/2019/02/12/version-controlling-using-git-flow-tags/>
+* <https://georgestocker.com/2020/03/04/please-stop-recommending-git-flow/>
+* <https://brightinventions.pl/blog/how-do-we-use-git>
+* <https://dev.to/scottshipp/war-of-the-git-flows-3ec2>
+* <https://medium.com/@brunoluiz/still-using-gitflow-what-about-a-simpler-alternative-74aa9a46b9a3>
+* <https://www.nomachetejuggling.com/2017/04/09/a-different-branching-strategy/>
+* <https://datasift.github.io/gitflow/GitFlowForGitHub.html>
+* <https://blogs.tensult.com/2019/02/12/version-controlling-using-git-flow-tags/>
+* <https://www.martindroessler.de/blog/index.php?/archives/83-Establishing-a-semi-automated-gitflowversioning-process-with-a-maven-project.html>
+
+Official guides:
+* <https://www.git-tower.com/learn/git/ebook/en/command-line/advanced-topics/git-flow/>
+* https://guides.github.com/introduction/flow/
+* <https://docs.gitlab.com/ee/topics/gitlab_flow.html>
+* <https://docs.microsoft.com/en-us/azure/devops/learn/devops-at-microsoft/use-git-microsoft>
+* <https://www.atlassian.com/blog/git/simple-git-workflow-is-simple>
+
+Semantic versioning (related topic) and continous delivery/deployment:
+* <https://semver.org>
+* <https://www.cloudbees.com/blog/apache-maven-continuous-deliverydeployment-devoptics-teams-approach>
+* <https://viesure.io/automating-semantic-versioning-with-maven/>
+* <https://github.com/semantic-release/semantic-release>
+* <https://levelup.gitconnected.com/semantic-versioning-and-release-automation-on-gitlab-9ba16af0c21>
+* <https://medium.com/trendyol-tech/semantic-versioning-and-gitlab-6bcd1e07c0b0>
+
+Gitlab tagging / release issues and examples:
+* <https://gitlab.com/gitlab-org/gitlab-foss/-/issues/23894>
+* <https://gitlab.com/gitlab-org/gitlab/-/issues/16290>
+* <https://github.com/viesure/blog-gitflow-maven/blob/master/.gitlab-ci.yml>
+* <https://docs.gitlab.com/ee/ci/yaml/#rules>
+* <https://stackoverflow.com/questions/47651769/gitlab-ci-run-build-job-when-manual-or-when-master-only>
+* <https://docs.gitlab.com/ee/user/project/push_options.html#push-options-for-gitlab-cicd>
 
 
 ## Contributions ##
