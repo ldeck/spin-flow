@@ -58,6 +58,162 @@ Essentially I'm spinning together a flow which, somewhat like a spider spinning 
 
 [![Funnel-Web Spider courtesy National Geograhic](https://media.nationalgeographic.org/assets/photos/000/309/30980.jpg "Keep your distance")](https://www.nationalgeographic.org/photo/burrow-spider/#funnel-web-spider)
 
+
+## spin-flow Ideas Consolidated ##
+
+### Concepts ###
+
+- long running branches
+  - snapshot
+    - typically aka the master branch
+    - it only receives accepted features
+    - it never receives hot fixes
+    - it is never deployed to higher environments
+    - it is thus only concerned with major.minor versions
+    - candidate branches are taken from it for promotion
+- short lived branches
+  - feature
+    - a requested and engineered change to the functionality of the system
+    - it is branched from the current snapshot
+    - upon acceptance it will be merged into the current snapshot
+  - candidate
+    - is branched from the current snapshot at regular intervals to prepare for release
+    - allows the master branch to continue rolling forward whilst the release is being prepared
+  - hotfix
+    - branched from a release tag
+    - features from the current snapshot are typically cherry-picked into the hotfix branch
+    - applying fixes to the current snapshot first safeguards the system from future regressions
+    - it is never merged into snapshot
+    - is promoted to a candidate with patch version bump (NB: simplest path is to promote hotfix to higher environments until release without further branching)
+- tags
+  - release
+    - denotes candidates marked for production release
+    - no guarantees are made that a release was considered stable in production over time
+    - rollbacks to other releases may occur
+
+### Additional Terms ###
+
+- releasing:
+  - candidate
+  - hotfix
+- developing
+  - snapshot
+  - feature
+  - hotfix
+- released
+  - release tags
+
+### Semantic Versioning ###
+
+#### Background ####
+
+Maven, for example, typically has Major.Minor.Patch-SNAPSHOT to indicate the next release to be Major.Minor.Patch. Our snapshot branch, however, doesn’t and shouldn’t care about patches. Patches are public release concerns. Nor need it care about version increments at all. All of these are opportunity for merge conflicts.
+
+#### Strategies ####
+
+- snapshot and features use “1.x-SNAPSHOT” continually. The release version is yet to be determined.
+- candidate use major.minor version bump from latest release tag “2.2.0-SNAPSHOT” via release:branch plugin
+- hotfix when branched increments the patch version. e.g., “2.1.0” —> “2.1.1-SNAPSHOT”
+- release tags the non-snapshot version via release:prepare release:perform as “2.1.1” for example.
+
+#### Further Reading ####
+
+- https://semver.org
+- https://www.cloudbees.com/blog/apache-maven-continuous-deliverydeployment-devoptics-teams-approach
+
+
+### Handling Rollbacks and Roll-forward Operations ###
+
+The questions that naturally arise from an operational integrity point of view include the following:
+- How do we know what the current production release is? This may not necessarily be equivalent to the latest release tag. A rollback may have occurred.
+- How do we then know, in the event of a failure to promote a version or a failure discovered some time after its promotion, what the previous version to rollback to is?
+
+#### Possible strategies ####
+
+1. Allocate two additional annotated tags used as aliases: release/current, release/previous and update them as needed. The commit message for the annotated tag could include enough information to indicate what changed.
+2. Use a delayed tagging strategy. That is, tag a release and remove the candidate branch after successful deploy. It is still, however, necessary to know what the previous stable release was.
+3. Automatically update a file “previous.release” as needed to be used as a pipeline job to “Rollback” if need be. The file will be updated in the snapshot branch and candidate branch if applicable.
+4. Use a series of “stable” tags that are applied after some delay post release.
+
+### Database Migrations ###
+
+#### Door 1: separate repo with own pipeline lifecycle ####
+
+Think about it, the DB is a separate micro-service. It services simultaneously multiple versions of the API that connects to it. This occurs
+- during the deployment of a new api (two versions are connected simultaneously)
+- when a rollback is required (an old version re-connects)
+- when a DDL operation occurs (backwards compatibility is required)
+
+The advantage, then, of managing this service for what it is—a separate service—via a separate repository dedicated to this process are as follows:
+- pipelines are dedicated to db migrations and relevant tests
+- teams are forced by nature to ensure db migrations are backwards compatible
+
+#### Door 2: same repo with additional migration jobs ####
+
+##### Advantages #####
+
+- gives you some level of separation of concerns
+- Running all tests regardless
+
+##### Disadvantages #####
+
+- having to deploy the API to multiple environments just to progress the pipeline
+- it is unclear if a production release was for db migrations and/or api updates
+- the db is not treated as a separate service, even though it is
+
+#### Door 3: same repo, performed by app startup ####
+
+##### Advantages #####
+
+- managed by the app and works everywhere
+
+##### Disadvantages #####
+
+- no separation of concerns
+- if migrations take a long time, needs further hand-holding
+- it is unclear if a production release was for db and/or api updates
+
+### Default pipeline steps (outline) ###
+
+- feature
+  - compile
+  - test
+  - dev-deploy
+  - dev-test
+  - accept
+    - merge to master
+    - delete branch
+- snapshot
+  - compile
+  - test
+  - dev-deploy (sonar, containerised deployment)
+  - dev-test
+  - docs
+  - release-prepare
+    - update master snapshot version (minor bump)
+    - create branch for current snapshot version
+- release:branch
+  - uat-deploy (apps deploy, code verification)
+  - uat-test (app, load)
+  - docs
+  - confirm
+    - release tag
+    - delete branch
+- release/tag
+  - prod-deploy
+  - prod-test
+  - docs
+- hotfix
+  - branched from release tag OR release branch
+  - compile
+  - test
+  - dev-deploy (container)
+  - accept
+    - create release branch (patch bump) OR,
+    - merge into current release branch
+
+---
+
 ## spin-flow highlights ##
 
 * A single long-lived branch: master (not guaranteed to be shippable)
@@ -234,159 +390,6 @@ Once a hotfix has been tested and accepted, it may now be incorporated into the 
     $ git push origin candidate/1.2.0-SNAPSHOT
     $ git branch -d hotfix/foobar
     $ git push origin :hotfix/foobar
-
-## spin-flow Ideas Consolidated ##
-
-### Concepts ###
-
-- long running branches
-  - snapshot
-    - typically aka the master branch
-    - it only receives accepted features
-    - it never receives hot fixes
-    - it is never deployed to higher environments
-    - it is thus only concerned with major.minor versions
-    - candidate branches are taken from it for promotion
-- short lived branches
-  - feature
-    - a requested and engineered change to the functionality of the system
-    - it is branched from the current snapshot
-    - upon acceptance it will be merged into the current snapshot
-  - candidate
-    - is branched from the current snapshot at regular intervals to prepare for release
-    - allows the master branch to continue rolling forward whilst the release is being prepared
-  - hotfix
-    - branched from a release tag
-    - features from the current snapshot are typically cherry-picked into the hotfix branch
-    - applying fixes to the current snapshot first safeguards the system from future regressions
-    - it is never merged into snapshot
-    - is promoted to a candidate with patch version bump (NB: simplest path is to promote hotfix to higher environments until release without further branching)
-- tags
-  - release
-    - denotes candidates marked for production release
-    - no guarantees are made that a release was considered stable in production over time
-    - rollbacks to other releases may occur
-
-### Additional Terms ###
-
-- releasing:
-  - candidate
-  - hotfix
-- developing
-  - snapshot
-  - feature
-  - hotfix
-- released
-  - release tags
-
-### Semantic Versioning ###
-
-#### Background ####
-
-Maven, for example, typically has Major.Minor.Patch-SNAPSHOT to indicate the next release to be Major.Minor.Patch. Our snapshot branch, however, doesn’t and shouldn’t care about patches. Patches are public release concerns. Nor need it care about version increments at all. All of these are opportunity for merge conflicts.
-
-#### Strategies ####
-
-- snapshot and features use “1.x-SNAPSHOT” continually. The release version is yet to be determined.
-- candidate use major.minor version bump from latest release tag “2.2.0-SNAPSHOT” via release:branch plugin
-- hotfix when branched increments the patch version. e.g., “2.1.0” —> “2.1.1-SNAPSHOT”
-- release tags the non-snapshot version via release:prepare release:perform as “2.1.1” for example.
-
-#### Further Reading ####
-
-- https://semver.org
-- https://www.cloudbees.com/blog/apache-maven-continuous-deliverydeployment-devoptics-teams-approach
-
-
-### Handling Rollbacks and Roll-forward Operations ###
-
-The questions that naturally arise from an operational integrity point of view include the following:
-- How do we know what the current production release is? This may not necessarily be equivalent to the latest release tag. A rollback may have occurred.
-- How do we then know, in the event of a failure to promote a version or a failure discovered some time after its promotion, what the previous version to rollback to is?
-
-#### Possible strategies ####
-
-1. Allocate two additional annotated tags used as aliases: release/current, release/previous and update them as needed. The commit message for the annotated tag could include enough information to indicate what changed.
-2. Use a delayed tagging strategy. That is, tag a release and remove the candidate branch after successful deploy. It is still, however, necessary to know what the previous stable release was.
-3. Automatically update a file “previous.release” as needed to be used as a pipeline job to “Rollback” if need be. The file will be updated in the snapshot branch and candidate branch if applicable.
-4. Use a series of “stable” tags that are applied after some delay post release.
-
-### Database Migrations ###
-
-#### Door 1: separate repo with own pipeline lifecycle ####
-
-Think about it, the DB is a separate micro-service. It services simultaneously multiple versions of the API that connects to it. This occurs
-- during the deployment of a new api (two versions are connected simultaneously)
-- when a rollback is required (an old version re-connects)
-- when a DDL operation occurs (backwards compatibility is required)
-
-The advantage, then, of managing this service for what it is—a separate service—via a separate repository dedicated to this process are as follows:
-- pipelines are dedicated to db migrations and relevant tests
-- teams are forced by nature to ensure db migrations are backwards compatible
-
-#### Door 2: same repo with additional migration jobs ####
-
-##### Advantages #####
-
-- gives you some level of separation of concerns
-- Running all tests regardless
-
-##### Disadvantages #####
-
-- having to deploy the API to multiple environments just to progress the pipeline
-- it is unclear if a production release was for db migrations and/or api updates
-- the db is not treated as a separate service, even though it is
-
-#### Door 3: same repo, performed by app startup ####
-
-##### Advantages #####
-
-- managed by the app and works everywhere
-
-##### Disadvantages #####
-
-- no separation of concerns
-- if migrations take a long time, needs further hand-holding
-- it is unclear if a production release was for db and/or api updates
-
-### Default pipeline steps (outline) ###
-
-- feature
-  - compile
-  - test
-  - dev-deploy
-  - dev-test
-  - accept
-    - merge to master
-    - delete branch
-- snapshot
-  - compile
-  - test
-  - dev-deploy (sonar, containerised deployment)
-  - dev-test
-  - docs
-  - release-prepare
-    - update master snapshot version (minor bump)
-    - create branch for current snapshot version
-- release:branch
-  - uat-deploy (apps deploy, code verification)
-  - uat-test (app, load)
-  - docs
-  - confirm
-    - release tag
-    - delete branch
-- release/tag
-  - prod-deploy
-  - prod-test
-  - docs
-- hotfix
-  - branched from release tag OR release branch
-  - compile
-  - test
-  - dev-deploy (container)
-  - accept
-    - create release branch (patch bump) OR,
-    - merge into current release branch
 
 
 ## Contributions ##
