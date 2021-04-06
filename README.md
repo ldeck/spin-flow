@@ -102,16 +102,22 @@ The questions that naturally arise from an operational integrity point of view i
 
 ### Database Migrations ###
 
-#### Door 1: separate repo with own pipeline lifecycle ####
+From good, better, best.
 
-Think about it, the DB is a separate micro-service. It services simultaneously multiple versions of the API that connects to it. This occurs
-- during the deployment of a new api (two versions are connected simultaneously)
-- when a rollback is required (an old version re-connects)
-- when a DDL operation occurs (backwards compatibility is required)
+#### Door 1: same repo, performed by app startup ####
 
-The advantage, then, of managing this service for what it is—a separate service—via a separate repository dedicated to this process are as follows:
-- pipelines are dedicated to db migrations and relevant tests
-- teams are forced by nature to ensure db migrations are backwards compatible
+This is the simplest and easiest to get going with. But doesn't scale.
+
+##### Advantages #####
+
+- managed by the app and works everywhere
+
+##### Disadvantages #####
+
+- no separation of concerns
+- if migrations take a long time, needs further hand-holding
+- it is unclear if a production release was for db and/or api updates
+- performing regression tests is a challenge: you need to identify and (re-)deploy an older version of your api somewhere and (re-)run its tests.
 
 #### Door 2: same repo with additional migration jobs ####
 
@@ -125,18 +131,31 @@ The advantage, then, of managing this service for what it is—a separate servic
 - having to deploy the API to multiple environments just to progress the pipeline
 - it is unclear if a production release was for db migrations and/or api updates
 - the db is not treated as a separate service, even though it is
+- performing regression tests is a challenge: you need to identify and (re-)deploy an older version of your api somewhere and (re-)run its tests.
 
-#### Door 3: same repo, performed by app startup ####
+#### Door 3: separate repo with own pipeline lifecycle ####
+
+Think about it, the DB is a separate micro-service. It services simultaneously multiple versions of the API that connects to it. This occurs
+- during the deployment of a new api (two versions are connected simultaneously)
+- when a rollback is required (an old version re-connects)
+- when a DDL operation occurs (backwards compatibility is required)
+
+The separate db is a just like any other separate micro-service; it adheres to a contract.
 
 ##### Advantages #####
 
-- managed by the app and works everywhere
+The advantage, then, of managing this service for what it is—a separate service—via a separate repository dedicated to this process are as follows:
+- pipelines are dedicated to db migrations and relevant tests for it, thereby saving time
+- triggering regression tests is relatively simple: trigger relevant tests for currently deployed api
+- teams are forced by nature to ensure db migrations are backwards compatible
 
 ##### Disadvantages #####
 
-- no separation of concerns
-- if migrations take a long time, needs further hand-holding
-- it is unclear if a production release was for db and/or api updates
+The disadvantages seem to me to be more about convenience at the expense of scalability.
+
+- managing a separate repository
+- thinking harder about compatible changes
+- managing relevant versions (perhaps via tags) across said repositories
 
 ### Default pipeline steps (outline) ###
 
